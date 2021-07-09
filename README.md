@@ -3,7 +3,7 @@
 ## TXVA and TXEA isolates
 
 ### Filter reads using trimmomatic
-####Installation in lab Linux
+####Installation in lab Linux (v0.39)
 $ conda install -c bioconda trimmomatic
 
 #### Make adapter file
@@ -11,6 +11,9 @@ New adapters.fa file was created by combining NexteraPE-PE.fa, TruSeq2-PE.fa, Tr
 
 ####Running quality filtering
 trimmomatic PE forward_read.fastq.gz reverse_read.fastq.gz forward_read_paired.fastq.gz forward_read_unpaired.fastq.gz reverse_read_paired.fastq.gz reverse_read_unpaired.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8 
+
+(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA/trimmomatic_filtered$ trimmomatic PE ../TXEAR1.fastq.gz ../TXEAR2.fastq.gz TXEA_R1_paired_trimmed.fastq.gz TXEA_R1_unpaired_trimmed.fastq.gz TXEA_R2_paired_trimmed.fastq.gz TXEA_R2_unpaired_trimmed.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8
+
 
 ### Assembly 1 using SPAdes
 #### Read Error Correction:
