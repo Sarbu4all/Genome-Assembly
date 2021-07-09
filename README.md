@@ -1,1 +1,25 @@
 # Genome-Assembly
+
+## TXVA and TXEA isolates
+
+### Filter reads using trimmomatic
+trimmomatic PE forward_read.fastq.gz reverse_read.fastq.gz forward_read_paired.fastq.gz forward_read_unpaired.fastq.gz reverse_read_paired.fastq.gz reverse_read_unpaired.fastq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8 
+
+### Assembly 1 using SPAdes
+#### Read Error Correction:
+spades.py -1 forward_read.fastq.gz -2 reverse_read.fastq.gz -o spades_error_corrected_reads -t <no. of threads> -m <RAM> --only-error-correction
+
+#### Assembly
+spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --only-assembler --careful
+
+### Assembly 2 using SPAdes - Recommendation for assembly of isolated bacterial genomes sequenced with reasonable coverage (~100x and more)
+  1. Trimmomatic or any read trimming tool to remove adapters and low quality reads.
+  2. Run with --only-assembler option (do not use internal read-correction)
+  3. Run in careful mode (use --careful)
+
+  
+  
+### Assembly using SKESA
+  skesa --reads R1.fastq,R2.fastq --cores 8 --memory 50 > sekesa.fa
+  
+### Assembly using SAUTE - Sequence Assembly Using Target Enrichment  
