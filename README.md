@@ -60,3 +60,5 @@ Finally:
   (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ skesa --reads TXEAtrimq201.fastq.gz,TXEAtrimq202.fastq.gz --contigs_out skesa_contigs.fa
 
 ### Assembly using SAUTE - Sequence Assembly Using Target Enrichment  
+  (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ ~/SKESA/saute --reads TXEA_R1_trimq15_maq20_minlen50.fastq.gz,TXEA_R2_trimq15_maq20_minlen50.fastq.gz  --targets ~/Downloads/Bradyrhizobium_diazoefficience_USDA110_ref_genome.fna.gz --gfa saute_assembly/graph.gfa --all_variants saute_assembly/assembly.fa
+
