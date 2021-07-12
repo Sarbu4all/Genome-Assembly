@@ -30,6 +30,25 @@ spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz 
   
   
 ### Assembly using SKESA
+  
+Downloaded SKESA
+To Install; (but got the error)  
+
+  ~/SKESA$ make -f Makefile.nongs
+c++ -std=c++11 -c -o skesa.o skesa.cpp -D NO_NGS -Wall -Wno-format-y2k  -pthread -fPIC -O3 -finline-functions -fstrict-aliasing -fomit-frame-pointer -msse4.2 
+skesa.cpp:27:10: fatal error: boost/program_options.hpp: No such file or directory
+ #include <boost/program_options.hpp>
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [Makefile.nongs:64: skesa.o] Error 1
+
+To install BOOST:
+  ~/SKESA$ sudo apt-get install libboost-all-dev
+ 
+Again:
+  ~/SKESA$ sudo apt-get install libboost-all-dev
+
+##### Running assembly:
   skesa --reads R1.fastq,R2.fastq --cores 8 --memory 50 > sekesa.fa
   
 ### Assembly using SAUTE - Sequence Assembly Using Target Enrichment  
