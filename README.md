@@ -15,6 +15,9 @@ trimmomatic PE forward_read.fastq.gz reverse_read.fastq.gz forward_read_paired.f
 (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA/trimmomatic_filtered$ trimmomatic PE ../TXEAR1.fastq.gz ../TXEAR2.fastq.gz TXEA_R1_paired_trimmed.fastq.gz TXEA_R1_unpaired_trimmed.fastq.gz TXEA_R2_paired_trimmed.fastq.gz TXEA_R2_unpaired_trimmed.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8
 
 
+### Filter reads using bbduk
+(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ '/home/woo-suk/Downloads/bbmap/bbduk.sh' in1=TXEAR1.fastq.gz in2=TXEAR2.fastq.gz out1=TXEA_R1_trimq15_maq20_minlen50.fastq.gz out2=TXEA_R2_trimq15_maq20_minlen50.fastq.gz ref='/home/woo-suk/Downloads/bbmap/resources/adapters.fa' ktrim=r k=23 mink=11 hdist=1 tpe tbo qtrim=rl trimq=15 ftl=5 ftr=0 ftm=5 maq=20 minlen=50
+
 ### Assembly 1 using SPAdes
 #### Read Error Correction:
 spades.py -1 forward_read.fastq.gz -2 reverse_read.fastq.gz -o spades_error_corrected_reads -t <no. of threads> -m <RAM> --only-error-correction
@@ -46,9 +49,14 @@ To install BOOST:
   ~/SKESA$ sudo apt-get install libboost-all-dev
  
 Again:
-  ~/SKESA$ sudo apt-get install libboost-all-dev
+  ~/SKESA$ sudo apt-get install libboost-all-dev (this also didn't work)
+  
+Finally:
+   conda install -c bioconda skesa (worked!)
 
 ##### Running assembly:
   skesa --reads R1.fastq,R2.fastq --cores 8 --memory 50 > sekesa.fa
   
+  (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ skesa --reads TXEAtrimq201.fastq.gz,TXEAtrimq202.fastq.gz --contigs_out skesa_contigs.fa
+
 ### Assembly using SAUTE - Sequence Assembly Using Target Enrichment  
