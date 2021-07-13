@@ -18,6 +18,8 @@ trimmomatic PE forward_read.fastq.gz reverse_read.fastq.gz forward_read_paired.f
 ### Filter reads using bbduk
 (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ '/home/woo-suk/Downloads/bbmap/bbduk.sh' in1=TXEAR1.fastq.gz in2=TXEAR2.fastq.gz out1=TXEA_R1_trimq15_maq20_minlen50.fastq.gz out2=TXEA_R2_trimq15_maq20_minlen50.fastq.gz ref='/home/woo-suk/Downloads/bbmap/resources/adapters.fa' ktrim=r k=23 mink=11 hdist=1 tpe tbo qtrim=rl trimq=15 ftl=5 ftr=0 ftm=5 maq=20 minlen=50
 
+(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXVA$ /home/woo-suk/Downloads/bbmap/bbduk.sh in1=TXVAR1.fastq.gz in2=TXVAR2.fastq.gz out1=TXVA_R1_trimq15_maq20_minlen50.fastq.gz out2=TXVA_R2_trimq15_maq20_minlen50.fastq.gz ref='/home/woo-suk/Downloads/bbmap/resources/adapters.fa' ktrim=r k=23 mink=11 hdist=1 tpe tbo qtrim=rl trimq=15 ftl=5 ftr=0 ftm=5 maq=20 minlen=50
+
 ### Assembly 1 using SPAdes
 #### Read Error Correction:
 spades.py -1 forward_read.fastq.gz -2 reverse_read.fastq.gz -o spades_error_corrected_reads -t <no. of threads> -m <RAM> --only-error-correction
@@ -25,6 +27,10 @@ spades.py -1 forward_read.fastq.gz -2 reverse_read.fastq.gz -o spades_error_corr
 #### Assembly
 spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --only-assembler --careful
 
+
+(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXVA$ ~/Downloads/SPAdes-3.15.2-Linux/bin/spades.py -1 TXVA_R1_trimq15_maq20_minlen50.fastq.gz -2 TXVA_R2_trimq15_maq20_minlen50.fastq.gz -o spades_assembly --isolate
+
+  
 ### Assembly 2 using SPAdes - Recommendation for assembly of isolated bacterial genomes sequenced with reasonable coverage (~100x and more)
   1. Trimmomatic or any read trimming tool to remove adapters and low quality reads.
   2. Run with --only-assembler option (do not use internal read-correction)
