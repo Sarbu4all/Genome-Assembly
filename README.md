@@ -68,3 +68,6 @@ Finally:
 ### Assembly using SAUTE - Sequence Assembly Using Target Enrichment  
   (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ ~/SKESA/saute --reads TXEA_R1_trimq15_maq20_minlen50.fastq.gz,TXEA_R2_trimq15_maq20_minlen50.fastq.gz  --targets ~/Downloads/Bradyrhizobium_diazoefficience_USDA110_ref_genome.fna.gz --gfa saute_assembly/graph.gfa --all_variants saute_assembly/assembly.fa
 
+  
+### Check assembly with quast:
+  (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXVA$ python ~/quast-5.0.2/quast.py -o quast_results_spades -r '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.fna.gz' -g '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.gff.gz' -l "spd15-15-50, spd15-15-100, spd15-20-50, spd15-20-100, spd20-20-50, spd20-20-100" bbduk_trimq15_maq15_minlen50/spades_assembly/scaffolds.fasta bbduk_trimq15_maq15_minlen100/spades_assembly/scaffolds.fasta bbduk_trimq15_maq20_minlen50/spades_assembly/scaffolds.fasta bbduk_trimq15_maq20_minlen100/spades_assembly/scaffolds.fasta bbduk_trimq20_maq20_minlen50/spades_assembly/scaffolds.fasta bbduk_trimq20_maq20_minlen100/spades_assembly/scaffolds.fasta --glimmer
