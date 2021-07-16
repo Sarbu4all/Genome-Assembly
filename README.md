@@ -38,6 +38,7 @@ spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz 
   3. Run in careful mode (use --careful)
 
   I followed this process.
+  
   spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --only-assembler --careful
          
   OR
