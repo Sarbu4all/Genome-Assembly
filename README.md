@@ -39,7 +39,9 @@ spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz 
 
   I followed this process.
   spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --only-assembler --careful
-          OR
+         
+  OR
+  
   spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --isolate
   
   Both give the same result.
