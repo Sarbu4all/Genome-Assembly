@@ -6,11 +6,10 @@
 #### Installation in lab Linux (v0.39)
 $ conda install -c bioconda trimmomatic
 
-#### Make adapter file
+#### Make adapter file and run quality filtering
 New adapters.fa file was created by combining NexteraPE-PE.fa, TruSeq2-PE.fa, TruSeq3-PE.fa and TruSeq3-PE-2.fa from Trimmomatic and adapters.fa from bbmap.
 
-####Running quality filtering
-trimmomatic PE forward_read.fastq.gz reverse_read.fastq.gz forward_read_paired.fastq.gz forward_read_unpaired.fastq.gz reverse_read_paired.fastq.gz reverse_read_unpaired.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8 
+$ trimmomatic PE forward_read.fastq.gz reverse_read.fastq.gz forward_read_paired.fastq.gz forward_read_unpaired.fastq.gz reverse_read_paired.fastq.gz reverse_read_unpaired.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8 
 
 (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA/trimmomatic_filtered$ trimmomatic PE ../TXEAR1.fastq.gz ../TXEAR2.fastq.gz TXEA_R1_paired_trimmed.fastq.gz TXEA_R1_unpaired_trimmed.fastq.gz TXEA_R2_paired_trimmed.fastq.gz TXEA_R2_unpaired_trimmed.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8
 
