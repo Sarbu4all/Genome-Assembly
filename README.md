@@ -3,7 +3,7 @@
 ## TXVA and TXEA isolates
 
 ### Filter reads using trimmomatic
-####Installation in lab Linux (v0.39)
+#### Installation in lab Linux (v0.39)
 $ conda install -c bioconda trimmomatic
 
 #### Make adapter file
