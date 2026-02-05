@@ -1,50 +1,38 @@
-# Genome-Assembly
-
-## TXVA and TXEA isolates
+# Genome-Assembly _Bradyrhizobium japonicum_ TXEA and TXVA isolates
+These are the novel draught-tolerant _Bradyrhizobium japonicum_ strains isolated from the soybean rhizosphere grown in the draught-prone region of Texas. These strains cultured in LB media and isolated pure colony was sequenced.
 
 ### Filter reads using trimmomatic
 #### Installation in lab Linux (v0.39)
-`$ conda install -c bioconda trimmomatic`
+`conda install -c bioconda trimmomatic`
 
 #### Make adapter file and run quality filtering
 New adapters.fa file was created by combining NexteraPE-PE.fa, TruSeq2-PE.fa, TruSeq3-PE.fa and TruSeq3-PE-2.fa from Trimmomatic and adapters.fa from bbmap.
 
-$ trimmomatic PE forward_read.fastq.gz reverse_read.fastq.gz forward_read_paired.fastq.gz forward_read_unpaired.fastq.gz reverse_read_paired.fastq.gz reverse_read_unpaired.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8 
-
-(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA/trimmomatic_filtered$ trimmomatic PE ../TXEAR1.fastq.gz ../TXEAR2.fastq.gz TXEA_R1_paired_trimmed.fastq.gz TXEA_R1_unpaired_trimmed.fastq.gz TXEA_R2_paired_trimmed.fastq.gz TXEA_R2_unpaired_trimmed.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8
+`trimmomatic PE ../TXEAR1.fastq.gz ../TXEAR2.fastq.gz TXEA_R1_paired_trimmed.fastq.gz TXEA_R1_unpaired_trimmed.fastq.gz TXEA_R2_paired_trimmed.fastq.gz TXEA_R2_unpaired_trimmed.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8`
+`trimmomatic PE ../TXVAR1.fastq.gz ../TXVAR2.fastq.gz TXVA_R1_paired_trimmed.fastq.gz TXVA_R1_unpaired_trimmed.fastq.gz TXVA_R2_paired_trimmed.fastq.gz TXVA_R2_unpaired_trimmed.fastq.gz ILLUMINACLIP:adapters.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36 -threads 8`
 
 
 ### Filter reads using bbduk
-(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ '/home/woo-suk/Downloads/bbmap/bbduk.sh' in1=TXEAR1.fastq.gz in2=TXEAR2.fastq.gz out1=TXEA_R1_trimq15_maq20_minlen50.fastq.gz out2=TXEA_R2_trimq15_maq20_minlen50.fastq.gz ref='/home/woo-suk/Downloads/bbmap/resources/adapters.fa' ktrim=r k=23 mink=11 hdist=1 tpe tbo qtrim=rl trimq=15 ftl=5 ftr=0 ftm=5 maq=20 minlen=50
+`/home/woo-suk/Downloads/bbmap/bbduk.sh in1=TXEAR1.fastq.gz in2=TXEAR2.fastq.gz out1=TXEA_R1_trimq15_maq20_minlen50.fastq.gz out2=TXEA_R2_trimq15_maq20_minlen50.fastq.gz ref='/home/woo-suk/Downloads/bbmap/resources/adapters.fa' ktrim=r k=23 mink=11 hdist=1 tpe tbo qtrim=rl trimq=15 ftl=5 ftr=0 ftm=5 maq=20 minlen=50`
 
-(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXVA$ /home/woo-suk/Downloads/bbmap/bbduk.sh in1=TXVAR1.fastq.gz in2=TXVAR2.fastq.gz out1=TXVA_R1_trimq15_maq20_minlen50.fastq.gz out2=TXVA_R2_trimq15_maq20_minlen50.fastq.gz ref='/home/woo-suk/Downloads/bbmap/resources/adapters.fa' ktrim=r k=23 mink=11 hdist=1 tpe tbo qtrim=rl trimq=15 ftl=5 ftr=0 ftm=5 maq=20 minlen=50
+`/home/woo-suk/Downloads/bbmap/bbduk.sh in1=TXVAR1.fastq.gz in2=TXVAR2.fastq.gz out1=TXVA_R1_trimq15_maq20_minlen50.fastq.gz out2=TXVA_R2_trimq15_maq20_minlen50.fastq.gz ref='/home/woo-suk/Downloads/bbmap/resources/adapters.fa' ktrim=r k=23 mink=11 hdist=1 tpe tbo qtrim=rl trimq=15 ftl=5 ftr=0 ftm=5 maq=20 minlen=50`
 
-### Assembly 1 using SPAdes
-#### Read Error Correction:
-spades.py -1 forward_read.fastq.gz -2 reverse_read.fastq.gz -o spades_error_corrected_reads -t <no. of threads> -m <RAM> --only-error-correction
-
-#### Assembly
-spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --only-assembler --careful
-
-
-(base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXVA$ ~/Downloads/SPAdes-3.15.2-Linux/bin/spades.py -1 TXVA_R1_trimq15_maq20_minlen50.fastq.gz -2 TXVA_R2_trimq15_maq20_minlen50.fastq.gz -o spades_assembly --isolate
-
-  
-### Assembly 2 using SPAdes
-  ##### Recommendation for assembly of isolated bacterial genomes sequenced with reasonable coverage (~100x and more)
+### Assembly using SPAdes
+  #### Recommendation for assembly of isolated bacterial genomes sequenced with reasonable coverage (~100x and more)
   1. Trimmomatic or any read trimming tool to remove adapters and low quality reads.
   2. Run with --only-assembler option (do not use internal read-correction)
   3. Run in careful mode (use --careful)
 
   I followed this process.
-  
-  spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --only-assembler --careful
+
+  `spades.py -1 TXEA_R1_trimq15_maq20_minlen50.fastq.gz -2 TXEA_R2_trimq15_maq20_minlen50.fastq.gz -o spades_careful_assembly -t 10 --only-assembler --careful`
+  `spades.py -1 TXVA_R1_trimq15_maq20_minlen50.fastq.gz -2 TXVA_R2_trimq15_maq20_minlen50.fastq.gz -o spades_careful_assembly -t 10 --only-assembler --careful`
          
   OR
   
-  spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --isolate
+  1. We can just use | --isolate mode. It will give the same result.
   
-  Both give the same result.
+  `spades.py -1 forward_read_corrected.fastq.gz -2 reverse_read_corrected.fastq.gz -o spades_careful_assembly -t <no. of threads> --isolate`
   
 ### Assembly using SKESA
   
@@ -77,9 +65,9 @@ Finally:
   (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXEA$ ~/SKESA/saute --reads TXEA_R1_trimq15_maq20_minlen50.fastq.gz,TXEA_R2_trimq15_maq20_minlen50.fastq.gz  --targets ~/Downloads/Bradyrhizobium_diazoefficience_USDA110_ref_genome.fna.gz --gfa saute_assembly/graph.gfa --all_variants saute_assembly/assembly.fa
 
   SAUTE assembly did not work. Did not produce any contigs.
+
   
 ### Check assembly with quast:
-
-  python ~/quast-5.0.2/quast.py -o quast_results_spades -r '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.fna.gz' -g '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.gff.gz' -l "spades, skesa" scaffolds.fasta skesa_contigs.fa --glimmer
+`python ~/quast-5.0.2/quast.py -o quast_results_spades -r '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.fna.gz' -g '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.gff.gz' -l "spades, skesa" scaffolds.fasta skesa_contigs.fa --glimmer'
 
   (base) woo-suk@Chang-lab:/media/woo-suk/Data/C_peterson/TXVA$ python ~/quast-5.0.2/quast.py -o quast_results_spades -r '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.fna.gz' -g '/media/woo-suk/Data/C_peterson/reference_genome/GCF_001642675.1_ASM164267v1_genomic.gff.gz' -l "spd15-15-50, spd15-15-100, spd15-20-50, spd15-20-100, spd20-20-50, spd20-20-100" bbduk_trimq15_maq15_minlen50/spades_assembly/scaffolds.fasta bbduk_trimq15_maq15_minlen100/spades_assembly/scaffolds.fasta bbduk_trimq15_maq20_minlen50/spades_assembly/scaffolds.fasta bbduk_trimq15_maq20_minlen100/spades_assembly/scaffolds.fasta bbduk_trimq20_maq20_minlen50/spades_assembly/scaffolds.fasta bbduk_trimq20_maq20_minlen100/spades_assembly/scaffolds.fasta --glimmer
