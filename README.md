@@ -4,7 +4,7 @@
 
 ### Filter reads using trimmomatic
 #### Installation in lab Linux (v0.39)
-``$ conda install -c bioconda trimmomatic
+`$ conda install -c bioconda trimmomatic`
 
 #### Make adapter file and run quality filtering
 New adapters.fa file was created by combining NexteraPE-PE.fa, TruSeq2-PE.fa, TruSeq3-PE.fa and TruSeq3-PE-2.fa from Trimmomatic and adapters.fa from bbmap.
